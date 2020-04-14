@@ -107,6 +107,8 @@ declare namespace JanusJS {
 			request: string;
 			[otherProps: string]: any;
 		};
+		success?(result:any): void;
+		error?(error:any): void;
 		jsep?: JSEP;
 	}
 
