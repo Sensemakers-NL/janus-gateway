@@ -54,6 +54,7 @@ declare namespace JanusJS {
 			uplink?: number;
 		};
 		error?: Error;
+		[otherProps: string]: any;
 	}
 
 	interface PluginOptions {
