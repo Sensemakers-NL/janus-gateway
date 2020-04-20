@@ -236,7 +236,8 @@ Janus.init = function(options) {
 			Janus.warn = console.warn.bind(console);
 			Janus.error = console.error.bind(console);
 		} else if(Array.isArray(options.debug)) {
-			for(var d of options.debug) {
+			for(var i=0;i<options.debug.length;i++) {
+				var d = options.debug[i];
 				switch(d) {
 					case "trace":
 						Janus.trace = console.trace.bind(console);
@@ -285,7 +286,8 @@ Janus.init = function(options) {
 						// Get rid of the now useless stream
 						try {
 							var tracks = stream.getTracks();
-							for(var mst of tracks) {
+							for(var i=0; i<tracks.length; i++) {
+								var mst = tracks[i];
 								if(mst)
 									mst.stop();
 							}
@@ -348,7 +350,8 @@ Janus.init = function(options) {
 			// Let's see if RTCRtpSender.getCapabilities() is there
 			if(RTCRtpSender && RTCRtpSender.getCapabilities && RTCRtpSender.getCapabilities("video") &&
 					RTCRtpSender.getCapabilities("video").codecs && RTCRtpSender.getCapabilities("video").codecs.length) {
-				for(var codec of RTCRtpSender.getCapabilities("video").codecs) {
+				for(var i=0; k<RTCRtpSender.getCapabilities("video").codecs.length; i++) {
+					var codec = RTCRtpSender.getCapabilities("video").codecs[i];
 					if(codec && codec.mimeType && codec.mimeType.toLowerCase() === "video/vp8") {
 						Janus.safariVp8 = true;
 						break;
@@ -1448,7 +1451,8 @@ function Janus(gatewayCallbacks) {
 				// Any pending messages to send?
 				if(config.dataChannel[label].pending && config.dataChannel[label].pending.length > 0) {
 					Janus.log("Sending pending messages on <" + label + ">:", config.dataChannel[label].pending.length);
-					for(var data of config.dataChannel[label].pending) {
+					for(var i=0; i<config.dataChannel[label].pending.length; i++) {
+						var data = config.dataChannel[label].pending[i];
 						Janus.log("Sending data on data channel <" + label + ">");
 						Janus.debug(data);
 						config.dataChannel[label].send(data);
@@ -1661,7 +1665,8 @@ function Janus(gatewayCallbacks) {
 					var audioTransceiver = null;
 					var transceivers = config.pc.getTransceivers();
 					if(transceivers && transceivers.length > 0) {
-						for(var t of transceivers) {
+						for(var i=0;i<transceivers.length;i++) {
+							var t = transceivers[i];
 							if((t.sender && t.sender.track && t.sender.track.kind === "audio") ||
 									(t.receiver && t.receiver.track && t.receiver.track.kind === "audio")) {
 								audioTransceiver = t;
@@ -1688,7 +1693,8 @@ function Janus(gatewayCallbacks) {
 					var videoTransceiver = null;
 					var transceivers = config.pc.getTransceivers();
 					if(transceivers && transceivers.length > 0) {
-						for(var t of transceivers) {
+						for(var i=0; i<transceivers.length; i++) {
+							var t = transceivers[i];
 							if((t.sender && t.sender.track && t.sender.track.kind === "video") ||
 									(t.receiver && t.receiver.track && t.receiver.track.kind === "video")) {
 								videoTransceiver = t;
@@ -2048,7 +2054,8 @@ function Janus(gatewayCallbacks) {
 						ra = false;
 					}
 					if(ra) {
-						for(var s of config.pc.getSenders()) {
+						for(var i=0; i< config.pc.getSenders().length; i++) {
+							var s = config.pc.getSenders()[i];
 							if(s && s.track && s.track.kind === "audio") {
 								Janus.log("Removing audio sender:", s);
 								config.pc.removeTrack(s);
@@ -2073,7 +2080,8 @@ function Janus(gatewayCallbacks) {
 						rv = false;
 					}
 					if(rv) {
-						for(var s of config.pc.getSenders()) {
+						for(var i=0; i<config.pc.getSenders().length; i++) {
+							var s = config.pc.getSenders()[i];
 							if(s && s.track && s.track.kind === "video") {
 								Janus.log("Removing video sender:", s);
 								config.pc.removeTrack(s);
@@ -2095,7 +2103,8 @@ function Janus(gatewayCallbacks) {
 					try {
 						// Try a MediaStreamTrack.stop() for each track
 						var tracks = config.myStream.getTracks();
-						for(var mst of tracks) {
+						for(var i=0; i< tracks.length; i++) {
+							var mst = tracks[i];
 							Janus.log(mst);
 							if(mst)
 								mst.stop();
@@ -2451,7 +2460,8 @@ function Janus(gatewayCallbacks) {
 			var audioTransceiver = null, videoTransceiver = null;
 			var transceivers = config.pc.getTransceivers();
 			if(transceivers && transceivers.length > 0) {
-				for(var t of transceivers) {
+				for(var i=0; i<transceivers.length; i++) {
+					var t = transceivers[i];
 					if((t.sender && t.sender.track && t.sender.track.kind === "audio") ||
 							(t.receiver && t.receiver.track && t.receiver.track.kind === "audio")) {
 						if(!audioTransceiver)
@@ -2654,7 +2664,8 @@ function Janus(gatewayCallbacks) {
 			var audioTransceiver = null, videoTransceiver = null;
 			var transceivers = config.pc.getTransceivers();
 			if(transceivers && transceivers.length > 0) {
-				for(var t of transceivers) {
+				for(var i=0; i< transceivers.length; i++) {
+					var t = transceivers[i];
 					if((t.sender && t.sender.track && t.sender.track.kind === "audio") ||
 							(t.receiver && t.receiver.track && t.receiver.track.kind === "audio")) {
 						if(!audioTransceiver)
@@ -3124,7 +3135,8 @@ function Janus(gatewayCallbacks) {
 				if(!config.streamExternal && config.myStream) {
 					Janus.log("Stopping local stream tracks");
 					var tracks = config.myStream.getTracks();
-					for(var mst of tracks) {
+					for(var i=0; i<tracks.length; i++) {
+						var mst = tracks[i];
 						Janus.log(mst);
 						if(mst)
 							mst.stop();
