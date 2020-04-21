@@ -65,8 +65,8 @@ declare namespace JanusJS {
 		consentDialog?: (on: boolean) => void;
 		webrtcState?: (isConnected: boolean) => void;
 		iceState?: (state: 'connected' | 'failed') => void;
-		mediaState?: (state: { type: 'audio' | 'video'; on: boolean }) => void;
-		slowLink?: (state: { uplink: boolean }) => void;
+		mediaState?: (type: 'audio' | 'video', on: boolean ) => void;
+		slowLink?: (uplink: boolean, nacks:number) => void;
 		onmessage?: (message: Message, jsep?: JSEP) => void;
 		onlocalstream?: (stream: MediaStream) => void;
 		onremotestream?: (stream: MediaStream) => void;
