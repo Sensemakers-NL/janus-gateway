@@ -147,7 +147,7 @@ declare namespace JanusJS {
 		isConnected(): boolean;
 		getSessionId(): string;
 		attach(options: PluginOptions): void;
-		destroy(): void;
+		destroy( options: any ): void;
 	}
 }
 
