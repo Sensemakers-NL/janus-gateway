@@ -350,7 +350,7 @@ Janus.init = function(options) {
 			// Let's see if RTCRtpSender.getCapabilities() is there
 			if(RTCRtpSender && RTCRtpSender.getCapabilities && RTCRtpSender.getCapabilities("video") &&
 					RTCRtpSender.getCapabilities("video").codecs && RTCRtpSender.getCapabilities("video").codecs.length) {
-				for(var i=0; k<RTCRtpSender.getCapabilities("video").codecs.length; i++) {
+				for(var i=0; i<RTCRtpSender.getCapabilities("video").codecs.length; i++) {
 					var codec = RTCRtpSender.getCapabilities("video").codecs[i];
 					if(codec && codec.mimeType && codec.mimeType.toLowerCase() === "video/vp8") {
 						Janus.safariVp8 = true;
