@@ -65,7 +65,7 @@ declare namespace JanusJS {
 		consentDialog?: (on: boolean) => void;
 		webrtcState?: (isConnected: boolean) => void;
 		iceState?: (state: 'connected' | 'failed' | 'disconnected') => void;
-		mediaState?: (type: 'audio' | 'video', on: boolean ) => void;
+		mediaState?: (medium: 'audio' | 'video', receiving: boolean, mid?: number) => void;
 		slowLink?: (uplink: boolean, nacks:number) => void;
 		onmessage?: (message: Message, jsep?: JSEP) => void;
 		onlocalstream?: (stream: MediaStream) => void;
@@ -140,6 +140,8 @@ declare namespace JanusJS {
 		static warn(...args: any[]): void;
 		static error(...args: any[]): void;
 		static randomString(length: number): string;
+		static attachMediaStream(element: HTMLMediaElement, stream: MediaStream): void;
+		static reattachMediaStream(to: HTMLMediaElement, from: HTMLMediaElement): void;
 
 		constructor(options: ConstructorOptions);
 
