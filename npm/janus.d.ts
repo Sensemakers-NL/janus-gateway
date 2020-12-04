@@ -54,6 +54,7 @@ declare namespace JanusJS {
 			uplink?: number;
 		};
 		error?: Error;
+		[otherProps: string]: any;
 	}
 
 	interface PluginOptions {
@@ -63,9 +64,9 @@ declare namespace JanusJS {
 		error?: (error: any) => void;
 		consentDialog?: (on: boolean) => void;
 		webrtcState?: (isConnected: boolean) => void;
-		iceState?: (state: 'connected' | 'failed') => void;
+		iceState?: (state: 'connected' | 'failed' | 'disconnected') => void;
 		mediaState?: (medium: 'audio' | 'video', receiving: boolean, mid?: number) => void;
-		slowLink?: (state: { uplink: boolean }) => void;
+		slowLink?: (uplink: boolean, nacks:number) => void;
 		onmessage?: (message: Message, jsep?: JSEP) => void;
 		onlocalstream?: (stream: MediaStream) => void;
 		onremotestream?: (stream: MediaStream) => void;
@@ -107,6 +108,8 @@ declare namespace JanusJS {
 			request: string;
 			[otherProps: string]: any;
 		};
+		success?(result:any): void;
+		error?(error:any): void;
 		jsep?: JSEP;
 	}
 
@@ -146,7 +149,7 @@ declare namespace JanusJS {
 		isConnected(): boolean;
 		getSessionId(): string;
 		attach(options: PluginOptions): void;
-		destroy(): void;
+		destroy( options: any ): void;
 	}
 }
 
